@@ -14,7 +14,7 @@ set(CMAKE_PREFIX_PATH "C:/Users/the_r/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 Ins
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
 # OpenRGB Quellcode Pfad
-set(OPENRGB_INCLUDE_DIR "C:/Users/the_r/Desktop/OpenRGB-master" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
+set(OPENRGB_INCLUDE_DIR "D:/Arbeit/openrgb-adalight-legacy/OpenRGB-master" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
 
 include_directories(
     ${OPENRGB_INCLUDE_DIR}
