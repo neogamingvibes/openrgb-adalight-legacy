@@ -10,6 +10,7 @@
 #include <vector>
 #include <QObject>
 #include <QMenu>
+#include <QTimer>
 #include "OpenRGBPluginInterface.h"
 #include "ResourceManagerInterface.h"
 #include "RGBController.h"
@@ -40,6 +41,7 @@ public:
 private slots:
     void                OnReconnectRequested();
     void                OnSettingsChanged();
+    void                OnKeepaliveTimer();
 
 private:
     void                Connect();
@@ -64,4 +66,9 @@ private:
     std::string                 m_configPath;
 
     std::vector<RGBController*> m_registeredControllers;
+
+    /*-----------------------------------------------------*\
+    | Keepalive timer to periodically resend colors         |
+    \*-----------------------------------------------------*/
+    QTimer*                     m_keepaliveTimer;
 };

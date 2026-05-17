@@ -11,7 +11,14 @@ OpenRGBAdalightPlugin::OpenRGBAdalightPlugin()
     : m_resourceManager(nullptr)
     , m_device(new AdalightDevice())
     , m_widget(nullptr)
+    , m_keepaliveTimer(new QTimer(this))
 {
+    /*-----------------------------------------------------*\
+    | Send colors every 2 seconds as keepalive              |
+    \*-----------------------------------------------------*/
+    connect(m_keepaliveTimer, &QTimer::timeout,
+            this, &OpenRGBAdalightPlugin::OnKeepaliveTimer);
+    m_keepaliveTimer->setInterval(2000);
 }
 
 OpenRGBAdalightPlugin::~OpenRGBAdalightPlugin()
@@ -117,6 +124,11 @@ QMenu* OpenRGBAdalightPlugin::GetTrayMenu()
 void OpenRGBAdalightPlugin::Unload()
 {
     /*-----------------------------------------------------*\
+    | Stop keepalive timer                                  |
+    \*-----------------------------------------------------*/
+    m_keepaliveTimer->stop();
+
+    /*-----------------------------------------------------*\
     | Unregister callbacks                                  |
     \*-----------------------------------------------------*/
     if (m_resourceManager != nullptr)
@@ -173,6 +185,11 @@ void OpenRGBAdalightPlugin::Connect()
     {
         m_widget->setStatus("Connected to " + QString::fromStdString(portName));
         OnDeviceListChanged();
+
+        /*-------------------------------------------------*\
+        | Start keepalive timer                             |
+        \*-------------------------------------------------*/
+        m_keepaliveTimer->start();
     }
     else
     {
@@ -185,6 +202,8 @@ void OpenRGBAdalightPlugin::Connect()
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::Disconnect()
 {
+    m_keepaliveTimer->stop();
+
     if (m_device->IsOpen())
     {
         int ledCount = (m_widget != nullptr) ? m_widget->GetLedCount() : 1;
@@ -251,6 +270,16 @@ void OpenRGBAdalightPlugin::SendColorsToDevice()
 }
 
 /*---------------------------------------------------------*\
+| OnKeepaliveTimer                                          |
+| Periodically resends the current colors to prevent the    |
+| Adalight firmware from turning off the LEDs               |
+\*---------------------------------------------------------*/
+void OpenRGBAdalightPlugin::OnKeepaliveTimer()
+{
+    SendColorsToDevice();
+}
+
+/*---------------------------------------------------------*\
 | DeviceListChangedCallback (static)                        |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::DeviceListChangedCallback(void* arg)
@@ -261,7 +290,7 @@ void OpenRGBAdalightPlugin::DeviceListChangedCallback(void* arg)
 
 /*---------------------------------------------------------*\
 | OnDeviceListChanged                                       |
-| Registers update callbacks for all new controllers       |
+| Registers update callbacks for all new controllers        |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::OnDeviceListChanged()
 {
