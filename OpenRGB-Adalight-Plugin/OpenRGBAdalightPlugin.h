@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <QObject>
+#include <QMenu>
 #include "OpenRGBPluginInterface.h"
 #include "ResourceManagerInterface.h"
 #include "RGBController.h"
