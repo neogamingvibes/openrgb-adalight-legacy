@@ -1,5 +1,0 @@
-OpenRGB/
-├── ResourceManagerInterface.h
-├── RGBController/
-│   ├── RGBColor.h
-│   └── RGBController.h
