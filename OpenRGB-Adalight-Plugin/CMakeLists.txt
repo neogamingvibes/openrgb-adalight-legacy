@@ -8,13 +8,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Qt5 Pfad
-set(CMAKE_PREFIX_PATH "C:/Users/the_r/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 Installations-Pfad")
+# Qt5 path
+set(CMAKE_PREFIX_PATH "C:/Users/the_r/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 installation path")
 
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
-# OpenRGB Quellcode Pfad
-set(OPENRGB_INCLUDE_DIR "D:/Arbeit/openrgb-adalight-legacy/OpenRGB-master" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
+# OpenRGB source path
+set(OPENRGB_INCLUDE_DIR "D:/Arbeit/openrgb-adalight-legacy/OpenRGB-master" CACHE PATH "Path to the OpenRGB source directory")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -42,7 +42,7 @@ target_link_libraries(OpenRGBAdalightPlugin
     Qt5::Widgets
 )
 
-# Output DLL direkt in den OpenRGB Plugins Ordner
+# Output DLL directly into the OpenRGB plugins folder
 set_target_properties(OpenRGBAdalightPlugin PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "$ENV{APPDATA}/OpenRGB/plugins"
 )

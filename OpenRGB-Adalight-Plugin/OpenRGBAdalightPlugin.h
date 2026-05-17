@@ -1,7 +1,7 @@
 /*---------------------------------------------------------*\
 | OpenRGBAdalightPlugin.h                                   |
 |                                                           |
-|   OpenRGB Plugin für Adalight/Ardulight Geräte            |
+|   OpenRGB Plugin for Adalight/Ardulight devices           |
 \*---------------------------------------------------------*/
 
 #pragma once
@@ -47,7 +47,7 @@ private:
     void                SendColorsToDevice();
 
     /*-----------------------------------------------------*\
-    | Callback wenn OpenRGB Controller aktualisiert wird    |
+    | Callback when an OpenRGB controller is updated        |
     \*-----------------------------------------------------*/
     static void         DeviceListChangedCallback(void* arg);
     void                OnDeviceListChanged();
@@ -56,7 +56,7 @@ private:
     void                OnControllerUpdate();
 
     /*-----------------------------------------------------*\
-    | Member Variablen                                      |
+    | Member variables                                      |
     \*-----------------------------------------------------*/
     ResourceManagerInterface*   m_resourceManager;
     AdalightDevice*             m_device;

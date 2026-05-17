@@ -1,8 +1,8 @@
 /*---------------------------------------------------------*\
 | AdalightDevice.cpp                                        |
 |                                                           |
-|   OpenRGB Plugin für Adalight/Ardulight Geräte            |
-|   Serielle Kommunikation über Windows API                 |
+|   OpenRGB Plugin for Adalight/Ardulight devices           |
+|   Serial communication via Windows API                    |
 \*---------------------------------------------------------*/
 
 #include "AdalightDevice.h"
@@ -21,15 +21,15 @@ AdalightDevice::~AdalightDevice()
 
 /*---------------------------------------------------------*\
 | Open                                                      |
-| Öffnet den seriellen Port mit den angegebenen Einstellungen|
+| Opens the serial port with the specified settings         |
 \*---------------------------------------------------------*/
 bool AdalightDevice::Open(const std::string& portName, int baudRate)
 {
     Close();
 
     /*-----------------------------------------------------*\
-    | Windows benötigt den Prefix "\\.\" für COM Ports      |
-    | über COM9, aber wir nutzen ihn immer für Sicherheit   |
+    | Windows requires the prefix "\\.\" for COM ports      |
+    | above COM9, but we always use it for safety           |
     \*-----------------------------------------------------*/
     std::string fullPortName = "\\\\.\\" + portName;
 
@@ -49,7 +49,7 @@ bool AdalightDevice::Open(const std::string& portName, int baudRate)
     }
 
     /*-----------------------------------------------------*\
-    | Serielle Port Einstellungen konfigurieren             |
+    | Configure serial port settings                        |
     \*-----------------------------------------------------*/
     DCB dcbSerialParams = { 0 };
     dcbSerialParams.DCBlength = sizeof(dcbSerialParams);
@@ -73,7 +73,7 @@ bool AdalightDevice::Open(const std::string& portName, int baudRate)
     }
 
     /*-----------------------------------------------------*\
-    | Timeouts setzen                                       |
+    | Set timeouts                                          |
     \*-----------------------------------------------------*/
     COMMTIMEOUTS timeouts = { 0 };
     timeouts.WriteTotalTimeoutConstant   = 100;
@@ -91,7 +91,7 @@ bool AdalightDevice::Open(const std::string& portName, int baudRate)
 
 /*---------------------------------------------------------*\
 | Close                                                     |
-| Schließt den seriellen Port                               |
+| Closes the serial port                                    |
 \*---------------------------------------------------------*/
 void AdalightDevice::Close()
 {
@@ -113,7 +113,7 @@ bool AdalightDevice::IsOpen() const
 
 /*---------------------------------------------------------*\
 | BuildHeader                                               |
-| Baut den Adalight Protokoll Header:                       |
+| Builds the Adalight protocol header:                      |
 | 'A' 'd' 'a' | Hi | Lo | (Hi ^ Lo ^ 0x55)                 |
 \*---------------------------------------------------------*/
 std::vector<unsigned char> AdalightDevice::BuildHeader(int ledCount)
@@ -135,7 +135,7 @@ std::vector<unsigned char> AdalightDevice::BuildHeader(int ledCount)
 
 /*---------------------------------------------------------*\
 | SendColors                                                |
-| Sendet die LED Farben an das Adalight Gerät               |
+| Sends the LED colors to the Adalight device               |
 \*---------------------------------------------------------*/
 bool AdalightDevice::SendColors(const std::vector<unsigned int>& colors,
                                  int ledCount,
@@ -147,7 +147,7 @@ bool AdalightDevice::SendColors(const std::vector<unsigned int>& colors,
     }
 
     /*-----------------------------------------------------*\
-    | Buffer aufbauen: Header + LED Daten                   |
+    | Build buffer: header + LED data                       |
     \*-----------------------------------------------------*/
     std::vector<unsigned char> buffer = BuildHeader(ledCount);
 
@@ -160,7 +160,7 @@ bool AdalightDevice::SendColors(const std::vector<unsigned int>& colors,
     for (int i = 0; i < count; i++)
     {
         /*-------------------------------------------------*\
-        | Farbe aus OpenRGB RGBColor extrahieren            |
+        | Extract color from OpenRGB RGBColor               |
         | RGBColor = 0x00BBGGRR                             |
         \*-------------------------------------------------*/
         unsigned char r = (colors[i])        & 0xFF;
@@ -168,7 +168,7 @@ bool AdalightDevice::SendColors(const std::vector<unsigned int>& colors,
         unsigned char b = (colors[i] >> 16)  & 0xFF;
 
         /*-------------------------------------------------*\
-        | Color Order anwenden                              |
+        | Apply color order                                 |
         \*-------------------------------------------------*/
         switch (colorOrder)
         {
@@ -221,7 +221,7 @@ bool AdalightDevice::SendColors(const std::vector<unsigned int>& colors,
 
 /*---------------------------------------------------------*\
 | TurnOff                                                   |
-| Schaltet alle LEDs aus (sendet schwarze Farbe)            |
+| Turns off all LEDs by sending black color values          |
 \*---------------------------------------------------------*/
 bool AdalightDevice::TurnOff(int ledCount)
 {
@@ -244,7 +244,7 @@ bool AdalightDevice::TurnOff(int ledCount)
 
 /*---------------------------------------------------------*\
 | WriteBuffer                                               |
-| Schreibt den Buffer auf den seriellen Port                |
+| Writes the buffer to the serial port                      |
 \*---------------------------------------------------------*/
 bool AdalightDevice::WriteBuffer(const std::vector<unsigned char>& buffer)
 {

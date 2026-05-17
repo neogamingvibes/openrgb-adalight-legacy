@@ -1,8 +1,8 @@
 /*---------------------------------------------------------*\
 | AdalightDevice.h                                          |
 |                                                           |
-|   OpenRGB Plugin für Adalight/Ardulight Geräte            |
-|   Serielle Kommunikation über Windows API                 |
+|   OpenRGB Plugin for Adalight/Ardulight devices           |
+|   Serial communication via Windows API                    |
 \*---------------------------------------------------------*/
 
 #pragma once
@@ -25,9 +25,8 @@ enum class ColorOrder
 };
 
 /*---------------------------------------------------------*\
-| AdalightDevice Klasse                                     |
-| Verwaltet die serielle Verbindung und das Adalight        |
-| Protokoll                                                 |
+| AdalightDevice Class                                      |
+| Manages the serial connection and the Adalight protocol   |
 \*---------------------------------------------------------*/
 class AdalightDevice
 {
@@ -36,38 +35,38 @@ public:
     ~AdalightDevice();
 
     /*-----------------------------------------------------*\
-    | Verbindung öffnen / schließen                         |
+    | Open / close connection                               |
     \*-----------------------------------------------------*/
     bool        Open(const std::string& portName, int baudRate);
     void        Close();
     bool        IsOpen() const;
 
     /*-----------------------------------------------------*\
-    | LED Daten senden                                      |
+    | Send LED data                                         |
     \*-----------------------------------------------------*/
     bool        SendColors(const std::vector<unsigned int>& colors,
                            int ledCount,
                            ColorOrder colorOrder);
 
     /*-----------------------------------------------------*\
-    | Alle LEDs ausschalten                                 |
+    | Turn off all LEDs                                     |
     \*-----------------------------------------------------*/
     bool        TurnOff(int ledCount);
 
 private:
     /*-----------------------------------------------------*\
-    | Adalight Protokoll Header bauen                       |
+    | Build Adalight protocol header                        |
     | 'A' 'd' 'a' | Hi | Lo | (Hi ^ Lo ^ 0x55)             |
     \*-----------------------------------------------------*/
     std::vector<unsigned char> BuildHeader(int ledCount);
 
     /*-----------------------------------------------------*\
-    | Daten seriell senden                                  |
+    | Write data to serial port                             |
     \*-----------------------------------------------------*/
     bool        WriteBuffer(const std::vector<unsigned char>& buffer);
 
     /*-----------------------------------------------------*\
-    | Private Member Variablen                              |
+    | Private member variables                              |
     \*-----------------------------------------------------*/
     HANDLE      m_serialHandle;
     bool        m_isOpen;

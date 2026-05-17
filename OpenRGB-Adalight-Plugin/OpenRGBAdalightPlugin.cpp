@@ -1,7 +1,7 @@
 /*---------------------------------------------------------*\
 | OpenRGBAdalightPlugin.cpp                                 |
 |                                                           |
-|   OpenRGB Plugin für Adalight/Ardulight Geräte            |
+|   OpenRGB Plugin for Adalight/Ardulight devices           |
 \*---------------------------------------------------------*/
 
 #include "OpenRGBAdalightPlugin.h"
@@ -28,7 +28,7 @@ OpenRGBPluginInfo OpenRGBAdalightPlugin::GetPluginInfo()
     OpenRGBPluginInfo info;
 
     info.Name           = "Adalight Plugin";
-    info.Description    = "Unterstützung für Adalight/Ardulight Geräte über serielle Schnittstelle";
+    info.Description    = "Support for Adalight/Ardulight devices via serial interface";
     info.Version        = "1.0.0";
     info.Commit         = "N/A";
     info.URL            = "https://github.com/yourusername/OpenRGB-Adalight-Plugin";
@@ -52,29 +52,29 @@ unsigned int OpenRGBAdalightPlugin::GetPluginAPIVersion()
 
 /*---------------------------------------------------------*\
 | Load                                                      |
-| Wird aufgerufen wenn das Plugin geladen wird              |
+| Called when the plugin is loaded                          |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::Load(ResourceManagerInterface* resource_manager_ptr)
 {
     m_resourceManager = resource_manager_ptr;
 
     /*-----------------------------------------------------*\
-    | Konfig Pfad holen                                     |
+    | Retrieve configuration path                           |
     \*-----------------------------------------------------*/
     m_configPath = m_resourceManager->GetConfigurationDirectory().string();
 
     /*-----------------------------------------------------*\
-    | Widget erstellen                                      |
+    | Create widget                                         |
     \*-----------------------------------------------------*/
     m_widget = new AdalightWidget();
 
     /*-----------------------------------------------------*\
-    | Einstellungen laden                                   |
+    | Load settings                                         |
     \*-----------------------------------------------------*/
     m_widget->LoadSettings(m_configPath);
 
     /*-----------------------------------------------------*\
-    | Widget Signals verbinden                              |
+    | Connect widget signals                                |
     \*-----------------------------------------------------*/
     connect(m_widget, &AdalightWidget::ReconnectRequested,
             this, &OpenRGBAdalightPlugin::OnReconnectRequested);
@@ -83,13 +83,13 @@ void OpenRGBAdalightPlugin::Load(ResourceManagerInterface* resource_manager_ptr)
             this, &OpenRGBAdalightPlugin::OnSettingsChanged);
 
     /*-----------------------------------------------------*\
-    | Callback registrieren wenn neue Controller erkannt    |
+    | Register callback for when new controllers are found  |
     \*-----------------------------------------------------*/
     m_resourceManager->RegisterDeviceListChangeCallback(
         DeviceListChangedCallback, this);
 
     /*-----------------------------------------------------*\
-    | Automatisch verbinden beim Start                      |
+    | Automatically connect on startup                      |
     \*-----------------------------------------------------*/
     Connect();
 }
@@ -112,12 +112,12 @@ QMenu* OpenRGBAdalightPlugin::GetTrayMenu()
 
 /*---------------------------------------------------------*\
 | Unload                                                    |
-| Wird aufgerufen wenn das Plugin entladen wird             |
+| Called when the plugin is unloaded                        |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::Unload()
 {
     /*-----------------------------------------------------*\
-    | Callbacks abmelden                                    |
+    | Unregister callbacks                                  |
     \*-----------------------------------------------------*/
     if (m_resourceManager != nullptr)
     {
@@ -132,7 +132,7 @@ void OpenRGBAdalightPlugin::Unload()
     }
 
     /*-----------------------------------------------------*\
-    | Einstellungen speichern                               |
+    | Save settings                                         |
     \*-----------------------------------------------------*/
     if (m_widget != nullptr)
     {
@@ -140,14 +140,14 @@ void OpenRGBAdalightPlugin::Unload()
     }
 
     /*-----------------------------------------------------*\
-    | Gerät trennen                                         |
+    | Disconnect device                                     |
     \*-----------------------------------------------------*/
     Disconnect();
 }
 
 /*---------------------------------------------------------*\
 | Connect                                                   |
-| Verbindet mit dem Adalight Gerät                          |
+| Connects to the Adalight device                           |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::Connect()
 {
@@ -161,7 +161,7 @@ void OpenRGBAdalightPlugin::Connect()
 
     if (portName.empty())
     {
-        m_widget->setStatus("Kein COM Port angegeben");
+        m_widget->setStatus("No COM port specified");
         return;
     }
 
@@ -171,12 +171,12 @@ void OpenRGBAdalightPlugin::Connect()
 
     if (ok)
     {
-        m_widget->setStatus("Verbunden mit " + QString::fromStdString(portName));
+        m_widget->setStatus("Connected to " + QString::fromStdString(portName));
         OnDeviceListChanged();
     }
     else
     {
-        m_widget->setStatus("Verbindung fehlgeschlagen: " + QString::fromStdString(portName));
+        m_widget->setStatus("Connection failed: " + QString::fromStdString(portName));
     }
 }
 
@@ -193,15 +193,15 @@ void OpenRGBAdalightPlugin::Disconnect()
 
         if (m_widget != nullptr)
         {
-            m_widget->setStatus("Nicht verbunden");
+            m_widget->setStatus("Not connected");
         }
     }
 }
 
 /*---------------------------------------------------------*\
 | SendColorsToDevice                                        |
-| Liest alle Farben aus den OpenRGB Controllern und sendet  |
-| sie an das Adalight Gerät                                 |
+| Reads all colors from the OpenRGB controllers and sends   |
+| them to the Adalight device                               |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::SendColorsToDevice()
 {
@@ -214,7 +214,7 @@ void OpenRGBAdalightPlugin::SendColorsToDevice()
     ColorOrder colorOrder = m_widget->GetColorOrder();
 
     /*-----------------------------------------------------*\
-    | Farben aus allen registrierten Controllern sammeln    |
+    | Collect colors from all registered controllers        |
     \*-----------------------------------------------------*/
     std::vector<unsigned int> allColors;
 
@@ -240,7 +240,7 @@ void OpenRGBAdalightPlugin::SendColorsToDevice()
     }
 
     /*-----------------------------------------------------*\
-    | Falls weniger Farben als LEDs: Rest mit Schwarz füllen|
+    | If fewer colors than LEDs: fill remainder with black  |
     \*-----------------------------------------------------*/
     while ((int)allColors.size() < ledCount)
     {
@@ -261,7 +261,7 @@ void OpenRGBAdalightPlugin::DeviceListChangedCallback(void* arg)
 
 /*---------------------------------------------------------*\
 | OnDeviceListChanged                                       |
-| Registriert Update Callbacks für alle neuen Controller    |
+| Registers update callbacks for all new controllers       |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::OnDeviceListChanged()
 {
@@ -271,7 +271,7 @@ void OpenRGBAdalightPlugin::OnDeviceListChanged()
     }
 
     /*-----------------------------------------------------*\
-    | Alte Callbacks abmelden                               |
+    | Unregister old callbacks                              |
     \*-----------------------------------------------------*/
     for (RGBController* controller : m_registeredControllers)
     {
@@ -280,7 +280,7 @@ void OpenRGBAdalightPlugin::OnDeviceListChanged()
     m_registeredControllers.clear();
 
     /*-----------------------------------------------------*\
-    | Neue Callbacks für alle Controller registrieren       |
+    | Register new callbacks for all controllers            |
     \*-----------------------------------------------------*/
     std::vector<RGBController*>& controllers =
         m_resourceManager->GetRGBControllers();
@@ -303,7 +303,7 @@ void OpenRGBAdalightPlugin::ControllerUpdateCallback(void* arg)
 
 /*---------------------------------------------------------*\
 | OnControllerUpdate                                        |
-| Wird aufgerufen wenn ein Controller seine Farben ändert   |
+| Called when a controller updates its colors               |
 \*---------------------------------------------------------*/
 void OpenRGBAdalightPlugin::OnControllerUpdate()
 {

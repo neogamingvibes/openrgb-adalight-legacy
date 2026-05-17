@@ -1,7 +1,7 @@
 /*---------------------------------------------------------*\
 | AdalightWidget.cpp                                        |
 |                                                           |
-|   UI Widget für das Adalight Plugin                       |
+|   UI widget for the Adalight plugin                       |
 \*---------------------------------------------------------*/
 
 #include "AdalightWidget.h"
@@ -21,32 +21,32 @@ AdalightWidget::~AdalightWidget()
 
 /*---------------------------------------------------------*\
 | SetupUI                                                   |
-| Erstellt die UI Elemente                                  |
+| Creates the UI elements                                   |
 \*---------------------------------------------------------*/
 void AdalightWidget::SetupUI()
 {
     /*-----------------------------------------------------*\
-    | Haupt Layout                                          |
+    | Main layout                                           |
     \*-----------------------------------------------------*/
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignTop);
 
     /*-----------------------------------------------------*\
-    | Gruppe: Verbindungseinstellungen                      |
+    | Group: Connection settings                            |
     \*-----------------------------------------------------*/
-    QGroupBox* connectionGroup = new QGroupBox("Adalight Verbindung", this);
+    QGroupBox* connectionGroup = new QGroupBox("Adalight Connection", this);
     QFormLayout* formLayout = new QFormLayout(connectionGroup);
 
     /*-----------------------------------------------------*\
-    | COM Port Eingabe                                      |
+    | COM port input                                        |
     \*-----------------------------------------------------*/
     m_portEdit = new QLineEdit(this);
-    m_portEdit->setPlaceholderText("z.B. COM3");
+    m_portEdit->setPlaceholderText("e.g. COM3");
     m_portEdit->setMaximumWidth(150);
     formLayout->addRow("COM Port:", m_portEdit);
 
     /*-----------------------------------------------------*\
-    | Baudrate Auswahl                                      |
+    | Baud rate selection                                   |
     \*-----------------------------------------------------*/
     m_baudrateCombo = new QComboBox(this);
     m_baudrateCombo->addItem("9600",    9600);
@@ -59,24 +59,24 @@ void AdalightWidget::SetupUI()
     m_baudrateCombo->addItem("1000000", 1000000);
 
     /*-----------------------------------------------------*\
-    | Standard: 115200                                      |
+    | Default: 115200                                       |
     \*-----------------------------------------------------*/
     m_baudrateCombo->setCurrentText("115200");
     m_baudrateCombo->setMaximumWidth(150);
-    formLayout->addRow("Baudrate:", m_baudrateCombo);
+    formLayout->addRow("Baud Rate:", m_baudrateCombo);
 
     /*-----------------------------------------------------*\
-    | LED Count Eingabe                                     |
+    | LED count input                                       |
     \*-----------------------------------------------------*/
     m_ledCountSpin = new QSpinBox(this);
     m_ledCountSpin->setMinimum(1);
     m_ledCountSpin->setMaximum(1000);
     m_ledCountSpin->setValue(25);
     m_ledCountSpin->setMaximumWidth(150);
-    formLayout->addRow("LED Anzahl:", m_ledCountSpin);
+    formLayout->addRow("LED Count:", m_ledCountSpin);
 
     /*-----------------------------------------------------*\
-    | Color Order Auswahl                                   |
+    | Color order selection                                 |
     \*-----------------------------------------------------*/
     m_colorOrderCombo = new QComboBox(this);
     m_colorOrderCombo->addItem("RGB", (int)ColorOrder::RGB);
@@ -86,16 +86,16 @@ void AdalightWidget::SetupUI()
     m_colorOrderCombo->addItem("GRB", (int)ColorOrder::GRB);
     m_colorOrderCombo->addItem("GBR", (int)ColorOrder::GBR);
     m_colorOrderCombo->setMaximumWidth(150);
-    formLayout->addRow("Farbreihenfolge:", m_colorOrderCombo);
+    formLayout->addRow("Color Order:", m_colorOrderCombo);
 
     mainLayout->addWidget(connectionGroup);
 
     /*-----------------------------------------------------*\
-    | Reconnect Button und Status                           |
+    | Reconnect button and status                           |
     \*-----------------------------------------------------*/
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
-    m_reconnectButton = new QPushButton("Verbinden / Neu verbinden", this);
+    m_reconnectButton = new QPushButton("Connect / Reconnect", this);
     m_reconnectButton->setMaximumWidth(250);
     buttonLayout->addWidget(m_reconnectButton);
     buttonLayout->addStretch();
@@ -103,13 +103,13 @@ void AdalightWidget::SetupUI()
     mainLayout->addLayout(buttonLayout);
 
     /*-----------------------------------------------------*\
-    | Status Label                                          |
+    | Status label                                          |
     \*-----------------------------------------------------*/
-    m_statusLabel = new QLabel("Status: Nicht verbunden", this);
+    m_statusLabel = new QLabel("Status: Not connected", this);
     mainLayout->addWidget(m_statusLabel);
 
     /*-----------------------------------------------------*\
-    | Signals verbinden                                     |
+    | Connect signals                                       |
     \*-----------------------------------------------------*/
     connect(m_reconnectButton, &QPushButton::clicked,
             this, &AdalightWidget::OnReconnectClicked);
@@ -129,7 +129,7 @@ void AdalightWidget::SetupUI()
 
 /*---------------------------------------------------------*\
 | LoadSettings                                              |
-| Lädt die gespeicherten Einstellungen                      |
+| Loads the saved settings                                  |
 \*---------------------------------------------------------*/
 void AdalightWidget::LoadSettings(const std::string& configPath)
 {
@@ -156,7 +156,7 @@ void AdalightWidget::LoadSettings(const std::string& configPath)
 
 /*---------------------------------------------------------*\
 | SaveSettings                                              |
-| Speichert die aktuellen Einstellungen                     |
+| Saves the current settings                                |
 \*---------------------------------------------------------*/
 void AdalightWidget::SaveSettings(const std::string& configPath)
 {
@@ -170,7 +170,7 @@ void AdalightWidget::SaveSettings(const std::string& configPath)
 }
 
 /*---------------------------------------------------------*\
-| Getter                                                    |
+| Getters                                                   |
 \*---------------------------------------------------------*/
 std::string AdalightWidget::GetPortName() const
 {
@@ -194,7 +194,7 @@ ColorOrder AdalightWidget::GetColorOrder() const
 
 /*---------------------------------------------------------*\
 | setStatus                                                 |
-| Zeigt den Verbindungsstatus an                            |
+| Displays the connection status                            |
 \*---------------------------------------------------------*/
 void AdalightWidget::setStatus(const QString& status)
 {

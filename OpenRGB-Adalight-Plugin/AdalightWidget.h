@@ -1,9 +1,9 @@
 /*---------------------------------------------------------*\
 | AdalightWidget.h                                          |
 |                                                           |
-|   UI Widget für das Adalight Plugin                       |
-|   Einstellungen: COM-Port, Baudrate, LED Count,           |
-|   Color Order, Reconnect Button                           |
+|   UI widget for the Adalight plugin                       |
+|   Settings: COM port, baud rate, LED count,               |
+|   color order, reconnect button                           |
 \*---------------------------------------------------------*/
 
 #pragma once
@@ -22,7 +22,7 @@
 #include "AdalightDevice.h"
 
 /*---------------------------------------------------------*\
-| AdalightWidget Klasse                                     |
+| AdalightWidget Class                                      |
 \*---------------------------------------------------------*/
 class AdalightWidget : public QWidget
 {
@@ -33,13 +33,13 @@ public:
     ~AdalightWidget();
 
     /*-----------------------------------------------------*\
-    | Einstellungen laden / speichern                       |
+    | Load / save settings                                  |
     \*-----------------------------------------------------*/
     void        LoadSettings(const std::string& configPath);
     void        SaveSettings(const std::string& configPath);
 
     /*-----------------------------------------------------*\
-    | Getter für aktuelle Einstellungen                     |
+    | Getters for current settings                          |
     \*-----------------------------------------------------*/
     std::string GetPortName()   const;
     int         GetBaudRate()   const;
@@ -47,7 +47,7 @@ public:
     ColorOrder  GetColorOrder() const;
 
     /*-----------------------------------------------------*\
-    | Status anzeigen                                       |
+    | Display status message                                |
     \*-----------------------------------------------------*/
     void        setStatus(const QString& status);
 
@@ -63,7 +63,7 @@ private:
     void        SetupUI();
 
     /*-----------------------------------------------------*\
-    | UI Elemente                                           |
+    | UI elements                                           |
     \*-----------------------------------------------------*/
     QLineEdit*   m_portEdit;
     QComboBox*   m_baudrateCombo;
