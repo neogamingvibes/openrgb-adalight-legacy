@@ -8,7 +8,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets SerialPort)
+# Qt5 Pfad - anpassen falls Qt woanders installiert ist
+set(CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 Installations-Pfad")
+
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
 set(OPENRGB_INCLUDE_DIR "" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
 
@@ -35,7 +38,6 @@ add_library(OpenRGBAdalightPlugin SHARED ${SOURCES} ${HEADERS})
 target_link_libraries(OpenRGBAdalightPlugin
     Qt5::Core
     Qt5::Widgets
-    Qt5::SerialPort
 )
 
 # Output DLL direkt in den OpenRGB Plugins Ordner
