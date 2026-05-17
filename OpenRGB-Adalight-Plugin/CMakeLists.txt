@@ -17,9 +17,10 @@ find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 set(OPENRGB_INCLUDE_DIR "D:/Arbeit/openrgb-adalight-legacy/OpenRGB-master" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
 
 include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${OPENRGB_INCLUDE_DIR}
     ${OPENRGB_INCLUDE_DIR}/RGBController
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${OPENRGB_INCLUDE_DIR}/i2c_smbus
 )
 
 set(SOURCES
