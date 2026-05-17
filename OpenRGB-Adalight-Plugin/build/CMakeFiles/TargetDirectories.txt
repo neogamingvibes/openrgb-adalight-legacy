@@ -1,3 +1,0 @@
-D:/Arbeit/openrgb-adalight-legacy/OpenRGB-Adalight-Plugin/build/CMakeFiles/OpenRGBAdalightPlugin.dir
-D:/Arbeit/openrgb-adalight-legacy/OpenRGB-Adalight-Plugin/build/CMakeFiles/ALL_BUILD.dir
-D:/Arbeit/openrgb-adalight-legacy/OpenRGB-Adalight-Plugin/build/CMakeFiles/ZERO_CHECK.dir
