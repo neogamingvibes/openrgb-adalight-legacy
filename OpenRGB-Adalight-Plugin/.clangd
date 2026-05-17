@@ -1,0 +1,10 @@
+CompileFlags:
+  Add:
+    - "-ID:/Arbeit/openrgb-adalight-legacy/OpenRGB-master"
+    - "-ID:/Arbeit/openrgb-adalight-legacy/OpenRGB-master/RGBController"
+    - "-ID:/Arbeit/openrgb-adalight-legacy/OpenRGB-master/i2c_smbus"
+    - "-IC:/Users/the_r/Qt/5.15.2/msvc2019_64/include"
+    - "-IC:/Users/the_r/Qt/5.15.2/msvc2019_64/include/QtCore"
+    - "-IC:/Users/the_r/Qt/5.15.2/msvc2019_64/include/QtWidgets"
+    - "-IC:/Users/the_r/Qt/5.15.2/msvc2019_64/include/QtGui"
+    - "-std=c++17"
