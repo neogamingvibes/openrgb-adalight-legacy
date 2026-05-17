@@ -8,12 +8,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Qt5 Pfad - anpassen falls Qt woanders installiert ist
-set(CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 Installations-Pfad")
+# Qt5 Pfad
+set(CMAKE_PREFIX_PATH "C:/Users/the_r/Qt/5.15.2/msvc2019_64" CACHE PATH "Qt5 Installations-Pfad")
 
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
-set(OPENRGB_INCLUDE_DIR "" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
+# OpenRGB Quellcode Pfad
+set(OPENRGB_INCLUDE_DIR "C:/Users/the_r/Desktop/OpenRGB-master" CACHE PATH "Pfad zum OpenRGB Quellcode Verzeichnis")
 
 include_directories(
     ${OPENRGB_INCLUDE_DIR}
