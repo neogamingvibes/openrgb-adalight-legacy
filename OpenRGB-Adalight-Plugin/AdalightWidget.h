@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include <string>
 #include <QWidget>
 #include <QLineEdit>
 #include <QComboBox>

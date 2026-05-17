@@ -6,14 +6,14 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+#include <QObject>
 #include "OpenRGBPluginInterface.h"
 #include "ResourceManagerInterface.h"
 #include "RGBController.h"
 #include "AdalightDevice.h"
 #include "AdalightWidget.h"
-
-#include <QObject>
-#include <vector>
 
 class OpenRGBAdalightPlugin : public QObject, public OpenRGBPluginInterface
 {
