@@ -1,5 +1,5 @@
 OpenRGB Adalight Legacy Plugin  
-A plugin for OpenRGB that restores support for classic Adalight / Ardulight serial‑based devices.
+A plugin for OpenRGB (https://openrgb.org/) that restores support for classic Adalight / Ardulight serial‑based devices.
 Many older DIY Ambilight setups rely on the original Adalight protocol (as used by Prismatik/Ambibox and early Arduino sketches), but modern RGB ecosystems no longer support these devices natively.
 
 This project includes code derived from the Prismatik (Lightpack) project by Mike Shatohin (brunql), licensed under GPL‑2.0.  
